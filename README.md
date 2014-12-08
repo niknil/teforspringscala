@@ -1,50 +1,54 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
-Dema en enkel server side app främst med Spring som ska visa fördelen över traditionell Java EE applikation.
+Demo and experiment with a simple webapp using the Spring Framework and Spring scala with rest services.
 
-
-Innehåll:
-* Rest tjänster
-* Domänmodellering
-* Använda Scala
-* Jetty servlet cointainer
+* Rest services and showing the api using halbrowser
+* Simple Domain Model with customer, product, ordering.
+    --Spring Repo --Eventually integration with MySQL
+* Jetty
 * Spring MVC
 * Spring IOC
-*Spring Hateoas
-* Spring messaging
+* Spring Hateoas
+* Spring Scala
 
-
-Varför Spring?
-Man bör använda Spring för att den förbättrar och förenklar existerande Java EE. T.ex. kan applikation deployas på en servletcointainer jetty/tomcat. 
-Många bra api:s spring MVC mm. Olika typer av konfigurering xml, annotering eller java config.
-
-
-Programmerarnas verktyg under projektet:
-Test Verktyg: Junit, Mockito. 
-Inkorporera programspråk: Scala eller Groovy.
+Tools:
+Testing: Junit, Mockito.
+Languages: Java & Scala.
 Build tool: Maven.
-Versionshantering: Git/Github
+Versioning: git
+
+
+### Estimation ###
+
+What can be done + estimation in hours:
+* Setup webapp from scratch: 16 hours
+* Learn Basic Scala: 32 hours
+* Setup som simple restservices using scala and java using Spring Hateoas
+    -- And setup of Halbrowser to make api showable: 8 hours
+* Spring Repo with some domain objects: 32 hours
+
+total: 88 hours
+
+What do i think can be done + estimation in hours:
+* Product domain:
+* Ordering domain:
+* Customer domain: 24 hours
+
+total: 112 hours
+
+What do i think can be done if everything runs perfectly + estimation in hours:
++
+* Integration with mysql: 6 hours
+
+total: 120 hours
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+* You need the Scala 2.11.4 binaries
+* Then you can use the pom to build the project.
 
 ### Who do I talk to? ###
 
 * Repo owner or admin
-* Other community or team contact
