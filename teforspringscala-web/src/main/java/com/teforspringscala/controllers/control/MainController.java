@@ -1,6 +1,5 @@
-package com.teforspringscala.controllers;
+package com.teforspringscala.controllers.control;
 
-import com.teforspringscala.controllers.domainresource.HelloResource;
 import com.teforspringscala.controllers.domainresource.MainResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.config.EnableHypermediaSupport;

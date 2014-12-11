@@ -1,4 +1,4 @@
-package com.teforspringscala.controllers
+package com.teforspringscala.controllers.control
 
 import org.springframework.hateoas.config.EnableHypermediaSupport
 import org.springframework.stereotype.Controller
