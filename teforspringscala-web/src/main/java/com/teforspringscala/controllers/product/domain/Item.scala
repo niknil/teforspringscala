@@ -12,7 +12,7 @@ class Item {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  var id: Long = null
+  var id: Long = 0
 
   @BeanProperty
   val name: String = null
