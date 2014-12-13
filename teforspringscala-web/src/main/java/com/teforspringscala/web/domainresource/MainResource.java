@@ -1,7 +1,6 @@
-package com.teforspringscala.controllers.domainresource;
+package com.teforspringscala.web.domainresource;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.teforspringscala.controllers.domain.Hello;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 

@@ -1,4 +1,4 @@
-package com.teforspringscala.controllers.product.domain
+package com.teforspringscala.item.domain
 
 import javax.persistence._
 

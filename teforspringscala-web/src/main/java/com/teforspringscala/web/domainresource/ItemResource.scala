@@ -1,6 +1,6 @@
-package com.teforspringscala.controllers.domainresource
+package com.teforspringscala.web.domainresource
 
-import com.teforspringscala.controllers.product.domain.Item
+import com.teforspringscala.item.domain.Item
 import org.springframework.hateoas.{Link, Resource}
 
 import scala.collection.JavaConverters._

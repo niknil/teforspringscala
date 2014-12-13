@@ -1,10 +1,10 @@
-package com.teforspringscala.controllers.control;
+package com.teforspringscala.web.controllers;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import com.teforspringscala.controllers.domain.Hello;
-import com.teforspringscala.controllers.domainresource.HelloResource;
+import com.teforspringscala.web.domain.Hello;
+import com.teforspringscala.web.domainresource.HelloResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
-package com.teforspringscala.controllers.product.dao
+package com.teforspringscala.item.dao
 
-import com.teforspringscala.controllers.product.domain.Item
+import com.teforspringscala.item.domain.Item
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional
 trait ItemRepo {
   def getAll: java.util.List[Item]
 
-  def save(customer: Item): Long
+  def save(item: Item): Long
 
-  def update(customer: Item)
+  def update(item: Item)
 
-  def get(customerId: Long): Item
+  def get(entityId: Long): Item
 
-  def delete(customerId: Long)
+  def delete(entityId: Long)
 }
 
 @Repository
@@ -27,17 +27,16 @@ class ItemRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends It
 
   private def currentSession = sessionFactory.getCurrentSession
 
-
-  def save(customer: Item): Long = Long.unbox(currentSession.save(customer).asInstanceOf[Object])
-
-
-  def update(customer: Item): Unit = currentSession.saveOrUpdate(customer)
+  def save(item: Item): Long = Long.unbox(currentSession.save(item).asInstanceOf[Object])
 
 
-  def delete(customerId: Long): Unit = currentSession.delete(get(customerId))
+  def update(item: Item): Unit = currentSession.saveOrUpdate(item)
 
 
-  def get(customerId: Long): Item = currentSession.get(classOf[Item], Long.box(customerId)).asInstanceOf[Item]
+  def delete(entityId: Long): Unit = currentSession.delete(get(entityId))
+
+
+  def get(entityId: Long): Item = currentSession.get(classOf[Item], Long.box(entityId)).asInstanceOf[Item]
 
 
   def getAll: java.util.List[Item] = currentSession.createCriteria(classOf[Item]).list().asInstanceOf[java.util.List[Item]]

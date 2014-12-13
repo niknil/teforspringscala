@@ -1,6 +1,6 @@
-package com.teforspringscala.controllers.control;
+package com.teforspringscala.web.controllers;
 
-import com.teforspringscala.controllers.domainresource.MainResource;
+import com.teforspringscala.web.domainresource.MainResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.stereotype.Controller;
