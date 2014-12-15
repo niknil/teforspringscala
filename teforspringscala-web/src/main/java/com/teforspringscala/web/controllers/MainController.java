@@ -23,7 +23,7 @@ public class MainController {
     @ResponseBody
     public MainResource showLinks(){
 
-        Link link = linkTo(methodOn(HelloWorldController.class).greeting()).withRel("ordering");
+        Link link = linkTo(methodOn(ItemController.class).showItems()).withRel("ordering");
 
         MainResource mainResource = new MainResource("",link);
 

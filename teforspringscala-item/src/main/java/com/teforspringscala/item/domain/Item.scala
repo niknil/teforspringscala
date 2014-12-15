@@ -8,16 +8,18 @@ import scala.beans.BeanProperty
  */
 @Entity
 @Table(name = "product")
-class Item {
+class Item(private val name:String) {
+
+
+  private def this() = this(null)
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   var id: Long = 0
 
-  @BeanProperty
-  val name: String = null
+  def getId = id
 
-  def getId: Long = id
+  def getName = name
 
   override def toString = id + " = " + name
 }
