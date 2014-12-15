@@ -10,7 +10,10 @@ import scala.beans.BeanProperty
 @Table(name = "product")
 class Item(private val name:String) {
 
-
+  /*
+  Java like defaultconstructor as required of
+  JPA specification
+  */
   private def this() = this(null)
 
   @Id
