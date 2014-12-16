@@ -19,7 +19,7 @@ class WelcomeController {
   @ResponseBody
   def showApi:WelcomeResource = {
 
-    val link: Link = linkTo(methodOn(classOf[ItemController]).showItems).withRel("items/")
+    val link: Link = linkTo(methodOn(classOf[ItemController]).showItems).withRel("api:items")
     val linkList:List[Link] = List(link)
     new WelcomeResource("",linkList)
 }
