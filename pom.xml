@@ -12,9 +12,7 @@
 
     <modules>
         <module>teforspringscala-web</module>
-        <module>teforspringscala-customer</module>
-        <module>teforspringscala-item</module>
-        <module>teforspringscala-dependencies</module>
+        <module>teforspringscala-domain</module>
     </modules>
 
     <!-->
@@ -37,8 +35,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
 
 

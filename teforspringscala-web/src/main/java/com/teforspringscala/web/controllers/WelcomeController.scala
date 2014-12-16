@@ -17,11 +17,11 @@ class WelcomeController {
 
   @RequestMapping(value = Array("/"))
   @ResponseBody
-  def showApi:WelcomeResource = {
+  def showApi: WelcomeResource = {
 
     val link: Link = linkTo(methodOn(classOf[ItemController]).showItems).withRel("api:items")
-    val linkList:List[Link] = List(link)
-    new WelcomeResource("",linkList)
-}
+    val linkList: List[Link] = List(link)
+    new WelcomeResource("", linkList)
+  }
 
 }

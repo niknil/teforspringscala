@@ -18,7 +18,7 @@ class Item(private val name:String) {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  var id: Long = 0
+  var id: Int = 0
 
   def getId = id
 
