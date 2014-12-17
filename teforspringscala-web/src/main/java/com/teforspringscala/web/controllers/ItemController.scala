@@ -1,11 +1,9 @@
 package com.teforspringscala.web.controllers
 
 
+import com.teforspringscala.item.client.ItemClient
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.teforspringscala.item.dao.RepoInterface
 import com.teforspringscala.item.domain.Item
 import com.teforspringscala.web.domainresource.{ItemResource, ItemResources}
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,13 +21,13 @@ import scala.collection.JavaConverters._
 @Controller
 @RequestMapping(value = Array("/api"))
 @EnableHypermediaSupport(`type` = Array(EnableHypermediaSupport.HypermediaType.HAL))
-class ItemController @Autowired()(val itemRepo: RepoInterface[Item]) {
+class ItemController @Autowired()(val itemClient: ItemClient) {
 
   @RequestMapping(value = Array("/items/"), method = Array(GET))
   @ResponseBody
   def showItems: ItemResources = {
 
-    val listItems = itemRepo.getAll
+    val listItems = itemClient.getList
 
     var link: Link = null
     val itemResourceList: ArrayBuffer[ItemResource] = new ArrayBuffer(listItems.size())
@@ -37,12 +35,12 @@ class ItemController @Autowired()(val itemRepo: RepoInterface[Item]) {
 
 
     for (item: Item <- listItems.asScala) {
-      link = linkTo(methodOn(classOf[ItemController]).showItem(item.getId)).withSelfRel()
+      link = linkTo(methodOn(classOf[ItemController]).showItem(item.getId)).withRel(item.getName)
       linkList.append(link)
-      itemResourceList.append(new ItemResource(item, linkList))
+      itemResourceList.append(new ItemResource(item,new ArrayBuffer[Link]()))
     }
 
-    new ItemResources(itemResourceList, new ArrayBuffer[Link]())
+    new ItemResources(itemResourceList, linkList)
   }
 
   @RequestMapping(value = Array("/items/"), method = Array(POST))
@@ -50,7 +48,7 @@ class ItemController @Autowired()(val itemRepo: RepoInterface[Item]) {
   def createItem(@RequestBody itemJson: Item): ItemResource = {
 
 
-    itemRepo.persist(itemJson)
+    itemClient.post(itemJson)
 
     val link: Link = linkTo(methodOn(classOf[ItemController]).showItem(itemJson.getId)).withSelfRel()
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
@@ -62,7 +60,7 @@ class ItemController @Autowired()(val itemRepo: RepoInterface[Item]) {
   @ResponseBody
   def showItem(@PathVariable itemId: Int): ItemResource = {
 
-    val item: Item = itemRepo.get(itemId)
+    val item: Item = itemClient.get(itemId)
 
     if (item == null) {
       throw new IllegalArgumentException("Did not find anything")
@@ -73,21 +71,5 @@ class ItemController @Autowired()(val itemRepo: RepoInterface[Item]) {
 
     new ItemResource(item, linkList)
   }
-
-
-  @RequestMapping(value = Array("/items/test"), method = Array(POST))
-  @ResponseBody
-  def testCreateItem(@RequestBody content: String): ItemResource = {
-
-    val mapper = new ObjectMapper()
-    mapper.registerModule(DefaultScalaModule)
-    val item = mapper.readValue[Item](content, classOf[Item])
-    itemRepo.persist(item)
-    val links: Link = linkTo(methodOn(classOf[ItemController]).showItem(item.getId)).withSelfRel()
-    val linkList: ArrayBuffer[Link] = ArrayBuffer(links)
-    new ItemResource(item, linkList)
-
-  }
-
 
 }

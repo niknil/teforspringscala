@@ -20,7 +20,7 @@ class WelcomeController {
   def showApi: WelcomeResource = {
 
     val linkList: List[Link] = List(linkTo(methodOn(classOf[ItemController]).showItems).withRel("api:items"),
-      linkTo(methodOn(classOf[ItemController]).showItems).withRel("api:order"),
+      linkTo(methodOn(classOf[OrderController]).showOrders).withRel("api:order"),
       linkTo(methodOn(classOf[ItemController]).showItems).withRel("api:customer"))
 
     new WelcomeResource("", linkList)

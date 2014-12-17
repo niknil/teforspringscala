@@ -7,7 +7,7 @@ import javax.persistence._
  */
 
 @Entity
-@Table(name = "order")
+@Table(name = "tefor_order")
 class Order(private val name:String) {
 
   /*
