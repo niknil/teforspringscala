@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 /**
  * Created by Bamsen on 2014-12-11.
  */
-trait repoInterface[T] {
+trait RepoInterface[T] {
 
   def getAll: java.util.List[T]
 
@@ -26,7 +26,7 @@ trait repoInterface[T] {
 
 @Repository
 @Transactional
-class ItemRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends repoInterface[Item] {
+class ItemRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends RepoInterface[Item] {
 
   private def currentSession = sessionFactory.getCurrentSession
 

@@ -5,7 +5,7 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.teforspringscala.item.dao.repoInterface
+import com.teforspringscala.item.dao.RepoInterface
 import com.teforspringscala.item.domain.Item
 import com.teforspringscala.web.domainresource.{ItemResource, ItemResources}
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,7 +23,7 @@ import scala.collection.JavaConverters._
 @Controller
 @RequestMapping(value = Array("/api"))
 @EnableHypermediaSupport(`type` = Array(EnableHypermediaSupport.HypermediaType.HAL))
-class ItemController @Autowired()(val itemRepo: repoInterface[Item]) {
+class ItemController @Autowired()(val itemRepo: RepoInterface[Item]) {
 
   @RequestMapping(value = Array("/items/"), method = Array(GET))
   @ResponseBody
@@ -35,7 +35,6 @@ class ItemController @Autowired()(val itemRepo: repoInterface[Item]) {
     val itemResourceList: ArrayBuffer[ItemResource] = new ArrayBuffer(listItems.size())
     val linkList: ArrayBuffer[Link] = new ArrayBuffer(listItems.size())
 
-    val linkLists: ArrayBuffer[Link] = new ArrayBuffer(listItems.size())
 
     for (item: Item <- listItems.asScala) {
       link = linkTo(methodOn(classOf[ItemController]).showItem(item.getId)).withSelfRel()

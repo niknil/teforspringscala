@@ -28,6 +28,8 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.teforspringscala.item.domain.Item</value>
+                <value>com.teforspringscala.item.domain.Order</value>
+                <value>com.teforspringscala.item.domain.Customer</value>
             </list>
         </property>
         <property name="hibernateProperties">
