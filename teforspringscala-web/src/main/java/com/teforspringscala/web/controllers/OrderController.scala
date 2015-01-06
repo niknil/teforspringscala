@@ -1,7 +1,7 @@
 package com.teforspringscala.web.controllers
 
 import com.teforspringscala.item.client.OrderClient
-import com.teforspringscala.item.domain.Order
+import com.teforspringscala.item.domain.{ItemInfo, Item, Order}
 import com.teforspringscala.web.domainresource.{OrderResource, OrderResources}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
@@ -22,6 +22,7 @@ import scala.collection.mutable.ArrayBuffer
 @RequestMapping(value = Array("/api"))
 @EnableHypermediaSupport(`type` = Array(EnableHypermediaSupport.HypermediaType.HAL))
 class OrderController @Autowired()(val orderClient: OrderClient) {
+
   @RequestMapping(value = Array("/orders/"), method = Array(GET))
   @ResponseBody
   def showOrders: OrderResources = {
@@ -34,9 +35,9 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
 
 
     for (order: Order <- listItems.asScala) {
-      link = linkTo(methodOn(classOf[OrderController]).showOrder(order.getId)).withRel(order.getName)
+      link = linkTo(methodOn(classOf[OrderController]).showOrder(order.getId)).withRel(order.getId.toString)
       linkList.append(link)
-      itemResourceList.append(new OrderResource(order,new ArrayBuffer[Link]()))
+      itemResourceList.append(new OrderResource(order, new ArrayBuffer[Link]()))
     }
 
     new OrderResources(itemResourceList, linkList)
@@ -49,7 +50,7 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
 
     orderClient.post(itemJson)
 
-    val link: Link = linkTo(methodOn(classOf[ItemController]).showItem(itemJson.getId)).withSelfRel()
+    val link: Link = linkTo(methodOn(classOf[OrderController]).showOrder(itemJson.getId)).withSelfRel()
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
 
     new OrderResource(itemJson, linkList)
@@ -67,6 +68,23 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
     val link: Link = linkTo(methodOn(classOf[OrderController]).showOrder(orderId)).withSelfRel()
 
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
+
+    new OrderResource(order, linkList)
+  }
+
+
+  @RequestMapping(value = Array("/orders/test"), method = Array(GET))
+  @ResponseBody
+  def testOrder: OrderResource = {
+
+    val order: Order = new Order()
+    val itemInfo: ItemInfo = new ItemInfo("asd", 2)
+    order.addItem(new Item("name", itemInfo))
+
+    val link: Link = linkTo(methodOn(classOf[OrderController]).showOrders).withSelfRel()
+    val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
+
+
 
     new OrderResource(order, linkList)
   }

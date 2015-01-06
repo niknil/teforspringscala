@@ -2,27 +2,31 @@ package com.teforspringscala.item.domain
 
 import javax.persistence._
 
-import scala.beans.BeanProperty
 /**
  * Created by Bamsen on 2014-12-09.
  */
 @Entity
-@Table(name = "product")
-class Item(private val name:String) {
+class Item(private val name:String, private val itemInfo:ItemInfo) extends AbstractEntity {
 
   /*
   Java like defaultconstructor as required of
   JPA specification
   */
-  private def this() = this(null)
+  private def this() = this(null,null)
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  var id: Int = 0
 
-  def getId = id
+  @ManyToOne
+  @JoinColumn
+  var order : Order = _
 
   def getName = name
 
-  override def toString = id + " = " + name
+  @Embedded
+  def getDetail = itemInfo
+
+  override def toString = name
+}
+
+object ItemBuilder {
+
 }

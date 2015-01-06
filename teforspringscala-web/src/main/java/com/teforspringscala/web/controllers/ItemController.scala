@@ -4,8 +4,8 @@ package com.teforspringscala.web.controllers
 import com.teforspringscala.item.client.ItemClient
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
-import com.teforspringscala.item.domain.Item
-import com.teforspringscala.web.domainresource.{ItemResource, ItemResources}
+import com.teforspringscala.item.domain.{ItemInfo, Order, Item}
+import com.teforspringscala.web.domainresource.{OrderResource, ItemResource, ItemResources}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.config.EnableHypermediaSupport
@@ -72,4 +72,24 @@ class ItemController @Autowired()(val itemClient: ItemClient) {
     new ItemResource(item, linkList)
   }
 
+
+  @RequestMapping(value = Array("/items/test"), method = Array(GET))
+  @ResponseBody
+  def testOrder: ItemResource = {
+
+    val itemInfo: ItemInfo = new ItemInfo("asd",2)
+    val item: Item = new Item("asd",itemInfo)
+
+
+    itemClient.post(item)
+
+
+
+    val link: Link = linkTo(methodOn(classOf[ItemController]).showItem(item.getId)).withSelfRel()
+    val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
+
+    new ItemResource(item, linkList)
+
+
+  }
 }

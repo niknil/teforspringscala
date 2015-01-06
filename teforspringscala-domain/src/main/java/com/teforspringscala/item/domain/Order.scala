@@ -8,21 +8,32 @@ import javax.persistence._
 
 @Entity
 @Table(name = "tefor_order")
-class Order(private val name:String) {
+class Order() extends AbstractEntity {
 
   /*
   Java like defaultconstructor as required of
   JPA specification
   */
-  private def this() = this(null)
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  var id: Int = 0
+  @OneToMany
+  var items : java.util.List[Item] = new java.util.ArrayList[Item]()
 
-  def getId = id
+  def getItems = items
 
-  def getName = name
 
-  override def toString = id + " = " + name
+  def addItem(item: Item) = {
+    items.add(item)
+  }
+
+  def addList(listItem: java.util.List[Item]) = {
+    items = listItem
+  }
+
+  override def toString = id + " "
+}
+
+
+object OrderBuilder {
+
+
 }

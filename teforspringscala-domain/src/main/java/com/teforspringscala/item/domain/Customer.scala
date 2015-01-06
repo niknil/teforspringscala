@@ -8,7 +8,7 @@ import javax.persistence._
 
 @Entity
 @Table(name = "customer")
-class Customer(private val name:String) {
+class Customer(private val accName:String) extends AbstractEntity{
 
   /*
   Java like defaultconstructor as required of
@@ -16,13 +16,19 @@ class Customer(private val name:String) {
   */
   private def this() = this(null)
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  var id: Int = 0
+  def getName = accName
 
-  def getId = id
+  override def toString = accName
 
-  def getName = name
 
-  override def toString = id + " = " + name
+
 }
+
+object CustomerBuilder {
+  private var accName:Option[String] = None
+
+  def withAccName(s:String) = {accName = Some(s); this}
+
+  def build() = new Customer(accName.get)
+}
+
