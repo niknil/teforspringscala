@@ -39,7 +39,7 @@ class OrderRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends O
   def delete(orderId: Int): Unit = currentSession.delete(get(orderId))
 
 
-  def get(orderId: Int): Order = currentSession.get(classOf[Item], Int.box(orderId)).asInstanceOf[Order]
+  def get(orderId: Int): Order = currentSession.get(classOf[Order], Int.box(orderId)).asInstanceOf[Order]
 
 
   def getAll: java.util.List[Order] = currentSession.createCriteria(classOf[Order]).list().asInstanceOf[java.util.List[Order]]

@@ -27,14 +27,14 @@ class ItemController @Autowired()(val itemClient: ItemClient) {
   @ResponseBody
   def showItems: ItemResources = {
 
-    val listItems = itemClient.getList
+    val itemList = itemClient.getList
 
     var link: Link = null
-    val itemResourceList: ArrayBuffer[ItemResource] = new ArrayBuffer(listItems.size())
-    val linkList: ArrayBuffer[Link] = new ArrayBuffer(listItems.size())
+    val itemResourceList: ArrayBuffer[ItemResource] = new ArrayBuffer(itemList.size())
+    val linkList: ArrayBuffer[Link] = new ArrayBuffer(itemList.size())
 
 
-    for (item: Item <- listItems.asScala) {
+    for (item: Item <- itemList.asScala) {
       link = linkTo(methodOn(classOf[ItemController]).showItem(item.getId)).withRel(item.getName)
       linkList.append(link)
       itemResourceList.append(new ItemResource(item,new ArrayBuffer[Link]()))
@@ -73,7 +73,7 @@ class ItemController @Autowired()(val itemClient: ItemClient) {
   }
 
 
-  @RequestMapping(value = Array("/items/test"), method = Array(GET))
+  @RequestMapping(value = Array("/items/test"), method = Array(POST))
   @ResponseBody
   def testOrder: ItemResource = {
 

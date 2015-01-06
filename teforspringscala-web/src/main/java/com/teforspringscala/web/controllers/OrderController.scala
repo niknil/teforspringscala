@@ -1,7 +1,9 @@
 package com.teforspringscala.web.controllers
 
-import com.teforspringscala.item.client.OrderClient
-import com.teforspringscala.item.domain.{ItemInfo, Item, Order}
+import javax.transaction.Transactional
+
+import com.teforspringscala.item.client.{ItemClient, OrderClient}
+import com.teforspringscala.item.domain.{Order}
 import com.teforspringscala.web.domainresource.{OrderResource, OrderResources}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
@@ -21,26 +23,27 @@ import scala.collection.mutable.ArrayBuffer
 @Controller
 @RequestMapping(value = Array("/api"))
 @EnableHypermediaSupport(`type` = Array(EnableHypermediaSupport.HypermediaType.HAL))
-class OrderController @Autowired()(val orderClient: OrderClient) {
+class OrderController @Autowired()(val orderClient: OrderClient,val itemClient:ItemClient) {
 
   @RequestMapping(value = Array("/orders/"), method = Array(GET))
   @ResponseBody
   def showOrders: OrderResources = {
 
-    val listItems = orderClient.getList
+    val orderList = orderClient.getList
 
     var link: Link = null
-    val itemResourceList: ArrayBuffer[OrderResource] = new ArrayBuffer(listItems.size())
-    val linkList: ArrayBuffer[Link] = new ArrayBuffer(listItems.size())
+    val orderResourceList: ArrayBuffer[OrderResource] = new ArrayBuffer(orderList.size())
+    val linkList: ArrayBuffer[Link] = new ArrayBuffer(orderList.size())
 
 
-    for (order: Order <- listItems.asScala) {
+    for (order: Order <- orderList.asScala) {
       link = linkTo(methodOn(classOf[OrderController]).showOrder(order.getId)).withRel(order.getId.toString)
       linkList.append(link)
-      itemResourceList.append(new OrderResource(order, new ArrayBuffer[Link]()))
+      orderResourceList.append(new OrderResource(order, new ArrayBuffer[Link]()))
     }
 
-    new OrderResources(itemResourceList, linkList)
+    new OrderResources(orderResourceList, linkList)
+
   }
 
   @RequestMapping(value = Array("/orders/"), method = Array(POST))
@@ -65,6 +68,7 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
     if (order == null) {
       throw new IllegalArgumentException("Did not find anything")
     }
+
     val link: Link = linkTo(methodOn(classOf[OrderController]).showOrder(orderId)).withSelfRel()
 
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
@@ -73,18 +77,18 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
   }
 
 
-  @RequestMapping(value = Array("/orders/test"), method = Array(GET))
+  @RequestMapping(value = Array("/orders/test"), method = Array(POST))
   @ResponseBody
   def testOrder: OrderResource = {
 
     val order: Order = new Order()
-    val itemInfo: ItemInfo = new ItemInfo("asd", 2)
-    order.addItem(new Item("name", itemInfo))
 
-    val link: Link = linkTo(methodOn(classOf[OrderController]).showOrders).withSelfRel()
+
+    order.addItem(itemClient.get(1))
+    orderClient.post(order)
+
+    val link: Link = linkTo(methodOn(classOf[OrderController]).showOrder(order.getId)).withSelfRel()
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
-
-
 
     new OrderResource(order, linkList)
   }

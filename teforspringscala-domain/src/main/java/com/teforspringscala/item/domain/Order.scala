@@ -1,5 +1,6 @@
 package com.teforspringscala.item.domain
 
+import java.util
 import javax.persistence._
 
 /**
@@ -15,18 +16,13 @@ class Order() extends AbstractEntity {
   JPA specification
   */
 
-  @OneToMany
-  var items : java.util.List[Item] = new java.util.ArrayList[Item]()
+  @OneToMany(fetch = FetchType.EAGER)
+  var items : java.util.List[Item] = new util.ArrayList[Item]()
 
   def getItems = items
 
-
   def addItem(item: Item) = {
     items.add(item)
-  }
-
-  def addList(listItem: java.util.List[Item]) = {
-    items = listItem
   }
 
   override def toString = id + " "
