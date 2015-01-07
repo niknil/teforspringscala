@@ -11,25 +11,42 @@ import javax.persistence._
 @Table(name = "tefor_order")
 class Order() extends AbstractEntity {
 
-  /*
-  Java like defaultconstructor as required of
-  JPA specification
-  */
 
-  @OneToMany(fetch = FetchType.EAGER)
-  var items : java.util.List[Item] = new util.ArrayList[Item]()
+
+  @OneToMany(fetch = FetchType.LAZY)
+  var items: java.util.List[Item] = null
 
   def getItems = items
 
   def addItem(item: Item) = {
+    if(items == null){
+      items = new util.ArrayList[Item]()
+    }
+
     items.add(item)
   }
 
+  def addList(itemsList: java.util.List[Item]) = {
+    items = itemsList
+  }
   override def toString = id + " "
 }
 
 
 object OrderBuilder {
+  private var accName: Option[String] = None
+  private val items: java.util.List[Item] = null
+
+  def withAccName(s: String) = {
+    accName = Some(s); this
+  }
+
+  def withItem(item: Item) = {
+    items.add(item); this
+  }
 
 
 }
+
+
+

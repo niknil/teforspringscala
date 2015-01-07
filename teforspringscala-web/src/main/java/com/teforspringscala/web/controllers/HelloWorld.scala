@@ -25,4 +25,5 @@ class HelloWorld {
     val linkList: List[Link] = List(link)
     new WelcomeResource("", linkList)
   }
+
 }

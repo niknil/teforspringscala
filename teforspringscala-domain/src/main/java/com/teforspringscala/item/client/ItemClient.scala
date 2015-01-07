@@ -1,6 +1,6 @@
 package com.teforspringscala.item.client
 
-import com.teforspringscala.item.dao.{CustomerManager, OrderManager, ItemManager}
+import com.teforspringscala.item.dao.ItemManager
 import com.teforspringscala.item.domain.Item
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -10,9 +10,8 @@ import org.springframework.stereotype.Component
  */
 trait ItemClient {
   def post(item:Item):Unit
-  def get(id:Int):Item
+  def get(id:Int):Option[Item]
   def getList:java.util.List[Item]
-  def update(item:Item):Unit
   def delete(id:Int): Unit
 }
 
@@ -23,15 +22,14 @@ class ItemClientImpl @Autowired()(val itemRepo: ItemManager) extends ItemClient{
   def post(item:Item):Unit = {
     itemRepo.persist(item)
   }
-  def get(id:Int):Item = {
+  def get(id:Int):Option[Item] = {
     itemRepo.get(id)
   }
+
   def getList:java.util.List[Item] = {
     itemRepo.getAll
   }
-  def update(item:Item):Unit = {
-    itemRepo.update(item)
-  }
+
   def delete(id:Int): Unit = {
     itemRepo.delete(id)
   }

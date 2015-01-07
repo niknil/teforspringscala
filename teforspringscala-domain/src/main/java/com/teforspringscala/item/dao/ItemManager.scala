@@ -2,7 +2,7 @@ package com.teforspringscala.item.dao
 
 import java.util
 
-import com.teforspringscala.item.domain.{Order, Customer, Item}
+import com.teforspringscala.item.domain.Item
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
@@ -17,9 +17,7 @@ trait ItemManager {
 
   def persist(item: Item): Unit
 
-  def update(item: Item)
-
-  def get(entityId: Int): Item
+  def get(entityId: Int): Option[Item]
 
   def delete(entityId: Int)
 }
@@ -30,16 +28,15 @@ class ItemRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends It
 
   private def currentSession = sessionFactory.getCurrentSession
 
-  def persist(item: Item): Unit = Int.unbox(currentSession.save(item).asInstanceOf[Object])
-
-
-  def update(item: Item): Unit = currentSession.saveOrUpdate(item)
-
+  def persist(item: Item): Unit = item.id match {
+    case 0 => Int.unbox(currentSession.save(item).asInstanceOf[Object])
+    case _ => currentSession.saveOrUpdate(item)
+  }
 
   def delete(entityId: Int): Unit = currentSession.delete(get(entityId))
 
 
-  def get(entityId: Int): Item = currentSession.get(classOf[Item], Int.box(entityId)).asInstanceOf[Item]
+  def get(entityId: Int): Option[Item] = Option(currentSession.get(classOf[Item], Int.box(entityId)).asInstanceOf[Item])
 
 
   def getAll: java.util.List[Item] = currentSession.createCriteria(classOf[Item]).list().asInstanceOf[java.util.List[Item]]

@@ -15,9 +15,7 @@ trait OrderManager {
 
   def persist(item: Order): Unit
 
-  def update(item: Order): Unit
-
-  def get(entityId: Int): Order
+  def get(entityId: Int): Option[Order]
 
   def delete(entityId: Int): Unit
 }
@@ -30,17 +28,14 @@ class OrderRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends O
   
   private def currentSession = sessionFactory.getCurrentSession
 
-  def persist(order: Order): Unit = Int.unbox(currentSession.save(order).asInstanceOf[Object])
-
-
-  def update(order: Order): Unit = currentSession.saveOrUpdate(order)
-
+  def persist(order: Order): Unit = order.id match {
+    case 0 => currentSession.save(order).asInstanceOf[Object]
+    case _ => currentSession.saveOrUpdate(order)
+  }
 
   def delete(orderId: Int): Unit = currentSession.delete(get(orderId))
 
-
-  def get(orderId: Int): Order = currentSession.get(classOf[Order], Int.box(orderId)).asInstanceOf[Order]
-
+  def get(orderId: Int): Option[Order] = Option(currentSession.get(classOf[Order], Int.box(orderId)).asInstanceOf[Order])
 
   def getAll: java.util.List[Order] = currentSession.createCriteria(classOf[Order]).list().asInstanceOf[java.util.List[Order]]
 }

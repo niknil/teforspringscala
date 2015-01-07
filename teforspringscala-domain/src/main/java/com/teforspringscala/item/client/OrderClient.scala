@@ -1,7 +1,7 @@
 package com.teforspringscala.item.client
 
-import com.teforspringscala.item.dao.{CustomerManager, OrderManager, ItemManager}
-import com.teforspringscala.item.domain.{Order, Item}
+import com.teforspringscala.item.dao.{OrderManager}
+import com.teforspringscala.item.domain.{Order}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -11,11 +11,9 @@ import org.springframework.stereotype.Component
 trait OrderClient {
   def post(item: Order): Unit
 
-  def get(id: Int): Order
+  def get(id: Int): Option[Order]
 
   def getList: java.util.List[Order]
-
-  def update(item: Order): Unit
 
   def delete(id: Int): Unit
 }
@@ -23,11 +21,12 @@ trait OrderClient {
 
 @Component
 class OrderClientImpl @Autowired()(val orderRepo: OrderManager) extends OrderClient {
+
   def post(order: Order): Unit = {
     orderRepo.persist(order)
   }
 
-  def get(id: Int): Order = {
+  def get(id: Int): Option[Order] = {
     orderRepo.get(id)
   }
 
@@ -35,14 +34,9 @@ class OrderClientImpl @Autowired()(val orderRepo: OrderManager) extends OrderCli
     orderRepo.getAll
   }
 
-  def update(order: Order): Unit = {
-    orderRepo.update(order)
-  }
-
   def delete(id: Int): Unit = {
     orderRepo.delete(id)
   }
-
 
 }
 

@@ -28,5 +28,12 @@ class Item(private val name:String, private val itemInfo:ItemInfo) extends Abstr
 }
 
 object ItemBuilder {
+  private var name:Option[String] = None
+  private var itemDetail: Option[ItemInfo] = None
 
+  def withAccName(s:String) = {name = Some(s); this}
+
+  def withDetail(detail:ItemInfo) = {itemDetail = Some(detail); this}
+
+  def build() = new Item(name.get,itemDetail.get)
 }
