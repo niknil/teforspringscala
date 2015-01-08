@@ -58,18 +58,13 @@ class ItemController @Autowired()(val itemClient: ItemClient) {
   @ResponseBody
   def showItem(@PathVariable itemId: Int): ItemResource = {
 
-    val item: Item = show(itemClient.get(itemId))
+    val item: Item = itemClient.get(itemId)
 
     val link: Link = linkTo(methodOn(classOf[ItemController]).showItem(itemId)).withSelfRel()
 
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
 
     new ItemResource(item, linkList)
-  }
-
-  private def show(item: Option[Item]) = item match {
-    case Some(s) => s
-    case None => throw new IllegalArgumentException
   }
 
 }

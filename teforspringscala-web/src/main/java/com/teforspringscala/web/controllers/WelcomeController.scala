@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
 @Controller
 @RequestMapping(value = Array("/api"))
 @EnableHypermediaSupport(`type` = Array(EnableHypermediaSupport.HypermediaType.HAL))
-class WelcomeController @Autowired()(val orderClient: OrderClient) {
+class WelcomeController {
 
   @RequestMapping(value = Array("/"))
   @ResponseBody
@@ -32,21 +32,6 @@ class WelcomeController @Autowired()(val orderClient: OrderClient) {
   }
 
 
-  @RequestMapping(value = Array("/test"), method = Array(GET))
-  @ResponseBody
-  def testOrder: Unit = {
-
-    val order: Order = new Order()
-    val listOfItems = new util.ArrayList[Item]()
-
-    listOfItems.add(ItemBuilder.withName("BestItem").withInfo("the best item").withStock(20).build)
-    listOfItems.add(ItemBuilder.withName("NextBest").withInfo("the next best item").withStock(16).build)
-    listOfItems.add(ItemBuilder.withName("SuperItem").withInfo("the super Item").withStock(20).build)
-
-    order.addList(listOfItems)
-    orderClient.post(order)
-
-  }
 
 
 }

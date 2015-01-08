@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component
  */
 trait ItemClient {
   def post(item:Item):Unit
-  def get(id:Int):Option[Item]
+  def get(id: Int): Item
   def getList:java.util.List[Item]
-  def delete(id:Int): Unit
+  def delete(orderId: Int): Unit
 }
 
 
@@ -22,7 +22,7 @@ class ItemClientImpl @Autowired()(val itemRepo: ItemManager) extends ItemClient{
   def post(item:Item):Unit = {
     itemRepo.persist(item)
   }
-  def get(id:Int):Option[Item] = {
+  def get(id: Int): Item  = {
     itemRepo.get(id)
   }
 
@@ -30,9 +30,8 @@ class ItemClientImpl @Autowired()(val itemRepo: ItemManager) extends ItemClient{
     itemRepo.getAll
   }
 
-  def delete(id:Int): Unit = {
+  def delete(id: Int): Unit = {
     itemRepo.delete(id)
   }
-
 
 }

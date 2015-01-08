@@ -68,7 +68,7 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
   @ResponseBody
   def showOrder(@PathVariable orderId: Int): OrderResource = {
 
-    val order: Order = controlOrder(orderClient.get(orderId))
+    val order: Order = orderClient.get(orderId)
 
 
     val itemList = order.getItems
@@ -85,10 +85,17 @@ class OrderController @Autowired()(val orderClient: OrderClient) {
 
   }
 
-  private def controlOrder(generic: Option[Order]) = generic match {
-    case Some(s) => s
-    case None => throw new IllegalArgumentException
+  @RequestMapping(value = Array("/orders/{orderId}"), method = Array(DELETE))
+  @ResponseBody
+  def deleteOrder(@PathVariable orderId: Int) = {
+
+    orderClient.delete(orderId)
+
   }
+
+
+
+
 
 
 }

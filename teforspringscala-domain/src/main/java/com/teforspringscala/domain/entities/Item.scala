@@ -18,7 +18,7 @@ class Item(private val name:String, private val info:String,private val stock:In
   private def this() = this(null,null,0)
 
 
-  @ManyToMany
+  @ManyToMany(cascade = Array(CascadeType.ALL))
   var order: java.util.List[Order] = new java.util.ArrayList[Order]
 
   def getOrders = order

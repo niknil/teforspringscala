@@ -13,18 +13,18 @@ trait OrderManager {
 
   def getAll: java.util.List[Order]
 
-  def persist(item: Order): Unit
+  def persist(order: Order): Unit
 
-  def get(entityId: Int): Option[Order]
+  def get(orderId: Int): Order
 
-  def delete(entityId: Int): Unit
+  def delete(orderId: Int): Unit
 }
 
 
 
 @Repository
 @Transactional
-class OrderRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends OrderManager {
+class OrderRepoImpl @Autowired() (val sessionFactory: SessionFactory) extends OrderManager {
   
   private def currentSession = sessionFactory.getCurrentSession
 
@@ -35,7 +35,13 @@ class OrderRepoImpl @Autowired() (val sessionFactory: SessionFactory)  extends O
 
   def delete(orderId: Int): Unit = currentSession.delete(get(orderId))
 
-  def get(orderId: Int): Option[Order] = Option(currentSession.get(classOf[Order], Int.box(orderId)).asInstanceOf[Order])
+  def get(orderId: Int): Order = controlOrder(Option(currentSession.get(classOf[Order], Int.box(orderId)).asInstanceOf[Order]))
 
   def getAll: java.util.List[Order] = currentSession.createCriteria(classOf[Order]).list().asInstanceOf[java.util.List[Order]]
+
+  private def controlOrder(someOrder: Option[Order]) = someOrder match {
+    case Some(s) => s
+    case None => throw new IllegalArgumentException("Did not find anything")
+  }
+
 }

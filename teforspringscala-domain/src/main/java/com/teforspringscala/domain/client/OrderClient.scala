@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component
 trait OrderClient {
   def post(item: Order): Unit
 
-  def get(id: Int): Option[Order]
+  def get(id: Int): Order
 
   def getList: java.util.List[Order]
 
-  def delete(id: Int): Unit
+  def delete(orderId: Int): Unit
 }
 
 
@@ -26,7 +26,7 @@ class OrderClientImpl @Autowired()(val orderRepo: OrderManager) extends OrderCli
     orderRepo.persist(order)
   }
 
-  def get(id: Int): Option[Order] = {
+  def get(id: Int): Order = {
     orderRepo.get(id)
   }
 
@@ -34,8 +34,8 @@ class OrderClientImpl @Autowired()(val orderRepo: OrderManager) extends OrderCli
     orderRepo.getAll
   }
 
-  def delete(id: Int): Unit = {
-    orderRepo.delete(id)
+  def delete(orderId: Int): Unit = {
+    orderRepo.delete(orderId)
   }
 
 }
