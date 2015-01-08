@@ -1,10 +1,9 @@
 package com.teforspringscala.web.controllers
 
-
-import com.teforspringscala.item.client.ItemClient
+import com.teforspringscala.domain.client.ItemClient
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
-import com.teforspringscala.item.domain.Item
+import com.teforspringscala.domain.entities.{Item}
 import com.teforspringscala.web.domainresource.{ItemResource, ItemResources}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
@@ -45,15 +44,14 @@ class ItemController @Autowired()(val itemClient: ItemClient) {
 
   @RequestMapping(value = Array("/items/"), method = Array(POST))
   @ResponseBody
-  def createItem(@RequestBody itemJson: Item): ItemResource = {
+  def createItem(@RequestBody itemFromJson: Item): ItemResource = {
 
+    itemClient.post(itemFromJson)
 
-    itemClient.post(itemJson)
-
-    val link: Link = linkTo(methodOn(classOf[ItemController]).showItem(itemJson.getId)).withSelfRel()
+    val link: Link = linkTo(methodOn(classOf[ItemController]).showItem(itemFromJson.id)).withSelfRel()
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
 
-    new ItemResource(itemJson, linkList)
+    new ItemResource(itemFromJson, linkList)
   }
 
   @RequestMapping(value = Array("/items/{itemId}"), method = Array(GET))

@@ -1,8 +1,8 @@
-package com.teforspringscala.item.dao
+package com.teforspringscala.domain.dao
 
 import java.util
 
-import com.teforspringscala.item.domain.Item
+import com.teforspringscala.domain.entities.Item
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository

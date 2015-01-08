@@ -1,4 +1,4 @@
-package com.teforspringscala.item.domain
+package com.teforspringscala.domain.entities
 
 import javax.persistence.{MappedSuperclass, GenerationType, GeneratedValue, Id}
 

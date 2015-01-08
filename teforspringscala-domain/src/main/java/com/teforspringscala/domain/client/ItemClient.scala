@@ -1,7 +1,7 @@
-package com.teforspringscala.item.client
+package com.teforspringscala.domain.client
 
-import com.teforspringscala.item.dao.ItemManager
-import com.teforspringscala.item.domain.Item
+import com.teforspringscala.domain.dao.ItemManager
+import com.teforspringscala.domain.entities.Item
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

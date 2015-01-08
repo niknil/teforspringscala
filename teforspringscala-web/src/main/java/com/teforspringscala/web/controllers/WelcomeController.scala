@@ -2,8 +2,8 @@ package com.teforspringscala.web.controllers
 
 import java.util
 
-import com.teforspringscala.item.client.{ItemClient, OrderClient}
-import com.teforspringscala.item.domain.{Order, Item, ItemInfo}
+import com.teforspringscala.domain.client.{ItemClient, OrderClient}
+import com.teforspringscala.domain.entities.{Order, Item}
 import com.teforspringscala.web.domainresource.WelcomeResource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
@@ -37,13 +37,10 @@ class WelcomeController @Autowired()(val orderClient: OrderClient,val itemClient
   def testOrder: Unit = {
 
     val order: Order = new Order()
-    val itemInfo: ItemInfo = new ItemInfo(20)
-    val itemInfo1: ItemInfo = new ItemInfo(15)
-    val itemInfo2: ItemInfo = new ItemInfo(10)
 
-    val item: Item = new Item("item",itemInfo)
-    val item1: Item = new Item("item1",itemInfo1)
-    val item2: Item = new Item("item2",itemInfo2)
+    val item: Item = new Item("asd","the best item",20)
+    val item1: Item = new Item("asdf","the next best item",15)
+    val item2: Item = new Item("asdsd","the super Item",10)
 
 
     val listOfItems = new util.ArrayList[Item]()

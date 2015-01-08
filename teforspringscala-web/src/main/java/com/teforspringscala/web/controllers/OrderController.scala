@@ -1,7 +1,7 @@
 package com.teforspringscala.web.controllers
 
-import com.teforspringscala.item.client.{ItemClient, OrderClient}
-import com.teforspringscala.item.domain.{Item, Order}
+import com.teforspringscala.domain.client.{ItemClient, OrderClient}
+import com.teforspringscala.domain.entities.{Item, Order}
 import com.teforspringscala.web.domainresource.{ItemResource, OrderResource, OrderResources}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
@@ -54,14 +54,14 @@ class OrderController @Autowired()(val orderClient: OrderClient,val itemClient:I
 
   @RequestMapping(value = Array("/orders/"), method = Array(POST))
   @ResponseBody
-  def createOrder(@RequestBody itemJson: Order): OrderResource = {
+  def createOrder(@RequestBody orderFromJson: Order): OrderResource = {
 
-    orderClient.post(itemJson)
+    orderClient.post(orderFromJson)
 
-    val link: Link = linkTo(methodOn(classOf[OrderController]).showOrder(itemJson.getId)).withSelfRel()
+    val link: Link = linkTo(methodOn(classOf[OrderController]).showOrder(orderFromJson.getId)).withSelfRel()
     val linkList: ArrayBuffer[Link] = ArrayBuffer(link)
 
-    new OrderResource(itemJson, linkList)
+    new OrderResource(orderFromJson, linkList)
   }
 
   @RequestMapping(value = Array("/orders/{orderId}"), method = Array(GET))
@@ -74,8 +74,6 @@ class OrderController @Autowired()(val orderClient: OrderClient,val itemClient:I
     new OrderResource(order, linkList)
 
   }
-
-
 
   private def controlOrder(generic: Option[Order]) = generic match {
     case Some(s) => s

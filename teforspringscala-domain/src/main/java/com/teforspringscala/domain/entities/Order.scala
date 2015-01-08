@@ -1,4 +1,4 @@
-package com.teforspringscala.item.domain
+package com.teforspringscala.domain.entities
 
 import java.util
 import javax.persistence._
@@ -13,8 +13,9 @@ class Order() extends AbstractEntity {
 
 
 
-  @OneToMany(fetch = FetchType.LAZY)
-  var items: java.util.List[Item] = null
+  @ManyToMany(cascade = Array(CascadeType.ALL))
+  @JoinColumn(name = "tefor_order_id")
+  var items: java.util.List[Item] = new java.util.ArrayList[Item]
 
   def getItems = items
 
