@@ -32,22 +32,3 @@ class Order() extends AbstractEntity {
   }
   override def toString = id + " "
 }
-
-
-object OrderBuilder {
-  private var accName: Option[String] = None
-  private val items: java.util.List[Item] = null
-
-  def withAccName(s: String) = {
-    accName = Some(s); this
-  }
-
-  def withItem(item: Item) = {
-    items.add(item); this
-  }
-
-
-}
-
-
-

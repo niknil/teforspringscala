@@ -1,18 +1,18 @@
 package com.teforspringscala.web.controllers
 
 import com.teforspringscala.domain.client.ItemClient
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
-import com.teforspringscala.domain.entities.{Item}
+import com.teforspringscala.domain.entities.Item
 import com.teforspringscala.web.domainresource.{ItemResource, ItemResources}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.config.EnableHypermediaSupport
+import org.springframework.hateoas.mvc.ControllerLinkBuilder.{linkTo, methodOn}
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, RequestBody, ResponseBody, RequestMapping}
 import org.springframework.web.bind.annotation.RequestMethod._
-import scala.collection.mutable.ArrayBuffer
+import org.springframework.web.bind.annotation.{PathVariable, RequestBody, RequestMapping, ResponseBody}
+
 import scala.collection.JavaConverters._
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by Bamsen on 2014-12-14.

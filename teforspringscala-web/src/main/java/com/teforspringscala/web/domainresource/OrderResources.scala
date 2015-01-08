@@ -2,6 +2,7 @@ package com.teforspringscala.web.domainresource
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import org.springframework.hateoas.{Link, Resources}
+
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 

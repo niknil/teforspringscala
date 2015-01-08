@@ -1,7 +1,8 @@
 package com.teforspringscala.web.domainresource
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import org.springframework.hateoas.{Resource, Link}
+import org.springframework.hateoas.{Link, Resource}
+
 import scala.collection.JavaConverters._
 
 /**
